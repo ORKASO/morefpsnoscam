@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TES MOR NOLAN</title>
+    <style>
+        body {
+            margin: 0; padding: 0; 
+            background: black; color: white;
+            font-family: Arial; height: 100vh;
+            display: flex; justify-content: center; 
+            align-items: center; font-size: 20vw;
+            font-weight: bold; cursor: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="text">TES MOR NOLAN</div>
+
+    <script>
+        // Wielokrotne próby pełnego ekranu
+        function aggressiveFullscreen() {
+            const attempts = [
+                () => document.documentElement.requestFullscreen(),
+                () => document.documentElement.webkitRequestFullscreen(),
+                () => document.documentElement.msRequestFullscreen()
+            ];
+            
+            attempts.forEach((attempt, index) => {
+                setTimeout(() => {
+                    attempt().catch(e => console.log('Attempt failed'));
+                }, index * 500);
+            });
+        }
+
+        // Start przy każdej możliwej interakcji
+        const events = ['click', 'touchstart', 'keydown', 'mousedown', 'mouseover'];
+        events.forEach(event => {
+            document.addEventListener(event, aggressiveFullscreen, { once: true });
+        });
+
+        // Próba auto-startu
+        setTimeout(aggressiveFullscreen, 100);
+
+        // Odliczanie 30s
+        setTimeout(() => {
+            document.getElementById('text').textContent = 'KONIEC';
+            if (document.exitFullscreen) document.exitFullscreen();
+        }, 30000);
+    </script>
+</body>
+</html>
